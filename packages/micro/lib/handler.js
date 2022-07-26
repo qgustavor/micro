@@ -1,11 +1,12 @@
 // Utilities
 const logError = require('./error');
+const url = require('url');
 
 module.exports = async file => {
 	let mod;
 
 	try {
-		mod = await require(file); // Await to support exporting Promises
+		mod = await import(url.pathToFileURL(file)); // Await to support exporting Promises
 
 		if (mod && typeof mod === 'object') {
 			mod = await mod.default; // Await to support es6 module's default export
